@@ -10,8 +10,8 @@ public class Config {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
     public static final ForgeConfigSpec.IntValue maxRenderDistance = BUILDER
-            .comment("Maximum render distance the mod will try to set (vanilla max is usually 32). Higher values need more RAM and a strong CPU/GPU.")
-            .defineInRange("maxRenderDistance", 32, 2, 64);
+            .comment("Maximum render distance the mod will try to set (vanilla max is usually 32). Higher values need a lot of RAM and a strong CPU/GPU. 128 is extreme.")
+            .defineInRange("maxRenderDistance", 32, 2, 128);
 
     public static final ForgeConfigSpec.BooleanValue enableAggressiveChunkLoading = BUILDER
             .comment("If true, attempts to keep more chunks loaded around the player (experimental, may impact performance).")
