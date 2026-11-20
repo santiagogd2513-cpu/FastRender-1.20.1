@@ -9,50 +9,57 @@ Mod para Minecraft Java **1.20.1** + **Forge 47.4.5** que busca:
 
 ## Plan de desarrollo (2 fases grandes)
 
-### Fase 1 — Fundación y Render Distance ✅ (en progreso)
-**Objetivo:** Tener un mod estable, que compile bien y que realmente suba la distancia de render.
+### Fase 1 — Fundación y Render Distance ✅
+- Proyecto limpio con Forge **47.4.5**
+- Config de distancia de render (2 a **128**)
+- Forzar la distancia al iniciar el cliente
+- GitHub Actions para generar el JAR
 
-Incluye:
-- Proyecto limpio configurado para Forge **47.4.5**
-- Config client-side (`maxRenderDistance` de 2 a **128**)
-- Forzar la distancia de render al iniciar el cliente
-- GitHub Actions que genera el JAR automáticamente
-- Logging claro y código preparado para la siguiente fase
+### Fase 2 — Aceleración de carga de chunks 🚀 (en progreso)
+**Objetivo:** Que los chunks se carguen más rápido y con menos pop-in.
 
-**Nota sobre perfiles:** En la Fase 2 se añadirán perfiles de rendimiento. Por tu petición, el perfil por defecto será **Alto** (carga de chunks más agresiva).
+Incluye ya:
+- **Perfiles de rendimiento**: `low` / `medium` / `high` / `extreme`
+- **Perfil por defecto: `high`** (como pediste)
+- Sistema de buffer extra de chunks
+- Multiplicador de chunks procesados por tick
+- Handler de eventos que se ejecuta en cliente y servidor
 
-### Fase 2 — Aceleración de carga de chunks
-**Objetivo:** Que los chunks se carguen más rápido y de forma más inteligente.
-
-Incluye:
-- Prefetch de chunks en la dirección del movimiento del jugador
-- Aumentar cuántos chunks se procesan por tick
-- Posible uso de Mixins para optimizar el sistema de carga de vanilla
-- Perfiles de rendimiento: Bajo / Medio / **Alto (por defecto)** / Extremo
-- Mejoras de estabilidad y fluidez real
+Pendiente / próximo:
+- Prefetch real en la dirección del movimiento del jugador
+- Mixins para un control más profundo del sistema de carga de vanilla
+- Ajustes finos de rendimiento y estabilidad
 
 ---
 
-## Estado actual
+## Cómo usar los perfiles
 
-Estamos trabajando en la **Fase 1**.
+En el archivo de config del cliente (`fastrender-client.toml`) puedes cambiar:
 
-**Importante:** 128 chunks es muy exigente. Se recomienda tener al menos 10-12 GB de RAM asignados a Minecraft y un PC potente.
+```toml
+performanceProfile = "high"   # low | medium | high | extreme
+enableAggressiveChunkLoading = true
+```
+
+- **low** → suave, poco impacto
+- **medium** → equilibrado
+- **high** → carga agresiva (por defecto)
+- **extreme** → máxima agresividad (puede generar lag si el PC no da)
+
+---
 
 ## Compilación automática
 
 Cada push a `main` dispara GitHub Actions y genera el JAR como artefacto.
 
-1. Ve a la pestaña **Actions** del repositorio.
-2. Selecciona el workflow **Build Mod**.
-3. Descarga el artefacto `FastRender-1.20.1`.
+1. Ve a la pestaña **Actions**
+2. Selecciona el workflow **Build Mod**
+3. Descarga el artefacto `FastRender-1.20.1`
 
-## Cómo usarlo localmente
+## Compilar localmente
 
 ```bash
 ./gradlew build
 ```
-
-El JAR aparecerá en `build/libs/`.
 
 Hecho con ❤️ para santiagogd2513-cpu.
