@@ -2,32 +2,44 @@
 
 Mod para Minecraft Java **1.20.1** + **Forge 47.4.5** que busca:
 
-- Aumentar la distancia de renderizado de forma configurable.
+- Aumentar la distancia de renderizado de forma configurable (hasta **128 chunks**).
 - Acelerar y hacer más suave la carga de chunks.
+
+---
 
 ## Plan de desarrollo (2 fases grandes)
 
-### Fase 1 — Fundación y Render Distance (Actual)
-- Proyecto limpio y compilable con Forge **47.4.5**
-- Config client-side (`maxRenderDistance` hasta 64)
-- Forzar la distancia de render al iniciar el juego
+### Fase 1 — Fundación y Render Distance
+**Objetivo:** Tener un mod estable, compilable y que realmente suba la distancia de render.
+
+Incluye:
+- Proyecto limpio configurado para Forge **47.4.5**
+- Config client-side (`maxRenderDistance` de 2 a **128**)
+- Forzar la distancia de render al iniciar el cliente
 - GitHub Actions que genera el JAR automáticamente
-- Estructura sólida lista para ampliar
+- Estructura sólida lista para la siguiente fase
+
+**Estado:** En desarrollo / casi lista.
 
 ### Fase 2 — Aceleración de carga de chunks
-- Prefetch de chunks en la dirección del movimiento del jugador
-- Aumento del número de chunks que se procesan por tick
+**Objetivo:** Que los chunks se carguen más rápido y de forma más inteligente.
+
+Incluye:
+- Prefetch de chunks en la dirección en la que se mueve el jugador
+- Aumentar cuántos chunks se procesan por tick
 - Posible uso de Mixins para optimizar el sistema de carga de vanilla
-- Opciones de configuración más avanzadas (perfiles de rendimiento)
-- Mejoras de estabilidad y rendimiento real
+- Perfiles de rendimiento (Bajo / Medio / Alto / Extremo)
+- Mejoras de estabilidad y rendimiento real en movimiento
+
+**Estado:** Pendiente (se empieza cuando la Fase 1 esté terminada y aprobada).
 
 ---
 
 ## Estado actual
 
-Fase 1 en progreso / casi lista.
+Estamos en **Fase 1**.
 
-**Importante:** Subir mucho la render distance consume mucha RAM y CPU/GPU. Úsalo con precaución.
+**Importante:** 128 chunks es muy exigente. Necesitas bastante RAM (recomendado 12GB+ asignados a Minecraft) y un PC fuerte.
 
 ## Compilación automática
 
