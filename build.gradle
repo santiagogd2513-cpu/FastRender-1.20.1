@@ -3,6 +3,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 version = mod_version
@@ -26,6 +27,11 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+
+            // Mixin
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
             mods {
                 "${mod_id}" {
                     source sourceSets.main
@@ -35,11 +41,13 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
+            args '-mixin.config=fastrender.mixins.json'
         }
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
+            args '-mixin.config=fastrender.mixins.json'
         }
 
         gameTestServer {
@@ -53,6 +61,11 @@ minecraft {
     }
 }
 
+mixin {
+    add sourceSets.main, "fastrender.refmap.json"
+    config 'fastrender.mixins.json'
+}
+
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
@@ -60,11 +73,18 @@ repositories {
         name = 'MinecraftForge'
         url = 'https://maven.minecraftforge.net/'
     }
+    maven {
+        name = 'Sponge'
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
     mavenCentral()
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    // Mixin
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -90,7 +110,8 @@ tasks.named('jar', Jar).configure {
                 'Specification-Version'   : '1',
                 'Implementation-Title'    : project.name,
                 'Implementation-Version'  : project.jar.archiveVersion,
-                'Implementation-Vendor'   : mod_authors
+                'Implementation-Vendor'   : mod_authors,
+                'MixinConfigs'            : 'fastrender.mixins.json'
         ])
     }
 
