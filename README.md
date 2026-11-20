@@ -5,18 +5,14 @@ Mod para Minecraft **1.20.1** + **Forge 47.4.5**.
 ## Qué hace este mod
 
 ### Fase 1 — Render Distance
-- Permite configurar la distancia de render hasta **128 chunks**.
-- Fuerza el valor al iniciar el cliente.
+- Distancia de render configurable hasta **128 chunks**
+- Se fuerza al iniciar el cliente
 
-### Fase 2 — Carga de chunks más agresiva
-- Sistema de **perfiles de rendimiento**:
-  - `low`
-  - `medium`
-  - `high` ← **por defecto**
-  - `extreme`
-- Buffer extra de chunks alrededor del jugador.
-- Multiplicador de procesamiento de chunks.
-- Detección de dirección de movimiento del jugador.
+### Fase 2 — Carga de chunks más agresiva + Mixins
+- Perfiles de rendimiento: `low` / `medium` / `high` (por defecto) / `extreme`
+- Buffer extra de chunks
+- Detección de dirección de movimiento
+- **Mixins activos** (ChunkMapMixin) para influir realmente en el sistema de vista de chunks del servidor
 
 ---
 
@@ -26,10 +22,10 @@ Archivo: `config/fastrender-client.toml`
 
 ```toml
 [Render Distance]
-	maxRenderDistance = 32   # de 2 a 128
+	maxRenderDistance = 32
 
 [Chunk Loading - Fase 2]
-	performanceProfile = "high"          # low | medium | high | extreme
+	performanceProfile = "high"
 	enableAggressiveChunkLoading = true
 	extraChunkBuffer = 8
 	chunksPerTickMultiplier = 2
@@ -37,29 +33,27 @@ Archivo: `config/fastrender-client.toml`
 
 ---
 
-## Cómo compilar
+## Mixins incluidos
 
-### Automático (recomendado)
-1. Ve a la pestaña **Actions** del repositorio
-2. Ejecuta el workflow **Build Mod**
-3. Descarga el artefacto `FastRender-1.20.1`
+- `ChunkMapMixin` → modifica la view distance efectiva según el perfil y el buffer configurado.
+
+La estructura ya está preparada para añadir más Mixins fácilmente.
+
+---
+
+## Compilar
+
+### Automático
+1. Pestaña **Actions**
+2. Workflow **Build Mod**
+3. Descargar el artefacto
 
 ### Manual
 ```bash
 ./gradlew build
 ```
-El JAR se genera en `build/libs/`.
 
 ---
 
-## Limitaciones actuales
-
-Sin **Mixins** el control sobre el sistema interno de carga de chunks de vanilla es limitado.  
-Esta versión implementa todo lo posible con la API pública de Forge + eventos.
-
-Para un control mucho más profundo (prefetch real, más chunks por tick de verdad, etc.) se necesitarían Mixins. Eso se puede añadir en una versión futura si lo pides.
-
----
-
-**Versión actual:** Base completa de Fase 1 + Fase 2  
+**Estado actual:** Fase 1 completa + Fase 2 con Mixins base  
 **Autor:** santiagogd2513-cpu
