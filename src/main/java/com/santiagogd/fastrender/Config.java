@@ -7,20 +7,48 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 @Mod.EventBusSubscriber(modid = FastRenderMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Config {
+
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
-    public static final ForgeConfigSpec.IntValue maxRenderDistance = BUILDER
-            .comment("Maximum render distance the mod will try to set (vanilla max is usually 32). Higher values need a lot of RAM and a strong CPU/GPU. 128 is extreme.")
-            .defineInRange("maxRenderDistance", 32, 2, 128);
+    // ==================== RENDER DISTANCE ====================
+    public static final ForgeConfigSpec.IntValue maxRenderDistance;
 
-    public static final ForgeConfigSpec.BooleanValue enableAggressiveChunkLoading = BUILDER
-            .comment("If true, attempts to keep more chunks loaded around the player (experimental, may impact performance).")
-            .define("enableAggressiveChunkLoading", true);
+    // ==================== FUTURE (Fase 2) ====================
+    // Por ahora solo dejamos el flag. Los perfiles de rendimiento
+    // (Bajo / Medio / Alto / Extremo) se implementarán en Fase 2.
+    // El usuario pidió que el perfil por defecto sea "Alto".
+    public static final ForgeConfigSpec.BooleanValue enableAggressiveChunkLoading;
+
+    static {
+        BUILDER.push("Render Distance");
+
+        maxRenderDistance = BUILDER
+                .comment(
+                        "Distancia de render máxima que el mod intentará aplicar.",
+                        "Vanilla normalmente limita a 32. Valores altos (64-128) necesitan mucha RAM y un PC fuerte.",
+                        "128 es extremo y puede causar lag o crashes si no tienes recursos suficientes."
+                )
+                .defineInRange("maxRenderDistance", 32, 2, 128);
+
+        BUILDER.pop();
+
+        BUILDER.push("Chunk Loading (Experimental - Fase 2)");
+
+        enableAggressiveChunkLoading = BUILDER
+                .comment(
+                        "Si está activado, el mod intentará cargar chunks de forma más agresiva.",
+                        "Esta funcionalidad se desarrollará completamente en la Fase 2.",
+                        "Por defecto estará orientado a rendimiento Alto."
+                )
+                .define("enableAggressiveChunkLoading", true);
+
+        BUILDER.pop();
+    }
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
-        // Config values are accessed via the IntValue/BooleanValue getters
+        // Aquí se pueden aplicar cambios cuando se recarga el config
     }
 }
