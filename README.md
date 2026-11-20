@@ -9,37 +9,35 @@ Mod para Minecraft Java **1.20.1** + **Forge 47.4.5** que busca:
 
 ## Plan de desarrollo (2 fases grandes)
 
-### Fase 1 — Fundación y Render Distance
-**Objetivo:** Tener un mod estable, compilable y que realmente suba la distancia de render.
+### Fase 1 — Fundación y Render Distance ✅ (en progreso)
+**Objetivo:** Tener un mod estable, que compile bien y que realmente suba la distancia de render.
 
 Incluye:
 - Proyecto limpio configurado para Forge **47.4.5**
 - Config client-side (`maxRenderDistance` de 2 a **128**)
 - Forzar la distancia de render al iniciar el cliente
 - GitHub Actions que genera el JAR automáticamente
-- Estructura sólida lista para la siguiente fase
+- Logging claro y código preparado para la siguiente fase
 
-**Estado:** En desarrollo / casi lista.
+**Nota sobre perfiles:** En la Fase 2 se añadirán perfiles de rendimiento. Por tu petición, el perfil por defecto será **Alto** (carga de chunks más agresiva).
 
 ### Fase 2 — Aceleración de carga de chunks
 **Objetivo:** Que los chunks se carguen más rápido y de forma más inteligente.
 
 Incluye:
-- Prefetch de chunks en la dirección en la que se mueve el jugador
+- Prefetch de chunks en la dirección del movimiento del jugador
 - Aumentar cuántos chunks se procesan por tick
 - Posible uso de Mixins para optimizar el sistema de carga de vanilla
-- Perfiles de rendimiento (Bajo / Medio / Alto / Extremo)
-- Mejoras de estabilidad y rendimiento real en movimiento
-
-**Estado:** Pendiente (se empieza cuando la Fase 1 esté terminada y aprobada).
+- Perfiles de rendimiento: Bajo / Medio / **Alto (por defecto)** / Extremo
+- Mejoras de estabilidad y fluidez real
 
 ---
 
 ## Estado actual
 
-Estamos en **Fase 1**.
+Estamos trabajando en la **Fase 1**.
 
-**Importante:** 128 chunks es muy exigente. Necesitas bastante RAM (recomendado 12GB+ asignados a Minecraft) y un PC fuerte.
+**Importante:** 128 chunks es muy exigente. Se recomienda tener al menos 10-12 GB de RAM asignados a Minecraft y un PC potente.
 
 ## Compilación automática
 
